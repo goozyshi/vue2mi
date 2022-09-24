@@ -1,23 +1,65 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-
+import Home from '@/views/Home'
+import Cart from '@/views/Cart'
+import Order from '@/views/Order'
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: Home,
+    children: [
+      {
+        path: '/index',
+        name: 'index',
+        component: () => import('@/views/Index')
+      },
+      {
+        path: '/product/:id',
+        name: 'product',
+        component: () => import('@/views/Product')
+      },
+      {
+        path: '/detail/:id',
+        name: 'detail',
+        component: () => import('@/views/Detail')
+      }
+    ]
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: '/cart',
+    name: 'cart',
+    component: Cart
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: Order,
+    children: [
+      {
+        path: 'list',
+        name: 'order-list',
+        component: () => import('@/views/OrderList')
+      },
+      {
+        path: 'confirm',
+        name: 'order-confirm',
+        component: () => import('@/views/OrderConfirm')
+      },
+      {
+        path: 'pay',
+        name: 'order-pay',
+        component: () => import('@/views/OrderPay')
+      },
+      {
+        path: 'alipay',
+        name: 'order-alipay',
+        component: () => import('@/views/AliPay')
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({
