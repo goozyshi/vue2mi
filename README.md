@@ -23,3 +23,11 @@ yarn lint
 cnpm install axios vue-lazyload element-ui vue-awesome-swiper vue-axios vue-cookie --save-dev
 ```
 
+## 封装Storage
+
+包括cookie、sessionStorage、localStorage
+```js
+
+```
+
+## 封装 axios 以及环境隔离配置
