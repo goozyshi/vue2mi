@@ -14,12 +14,19 @@
           <a href="javascript: void(0)" >小爱开放平台</a>
           <a href="javascript: void(0)" >企业团购</a>
           <a href="javascript: void(0)" >协议规则</a>
-          <a href="javascript: void(0)" >下载app</a>
+          <a href="https://www.mi.com/appdownload" target="_blank" class="app" >
+            下载app
+            <div class="app-qrcode">
+              <img src="https://i1.mifile.cn/f/i/17/appdownload/download.png"/>
+              <div>小米商城APP</div>
+            </div>
+          </a>
         </div>
         <div class="topbar-user">
-          <a href="javascript: void(0)" >登录</a>
-          <a href="javascript: void(0)" >注册</a>
-          <a href="javascript: void(0)" class="my-cart"><i class="icon-cart"></i>购物车</a>
+          <a href="javascript: void(0)" v-if="username">{{username}}</a>
+          <a href="javascript: void(0)" v-if="!username">登录</a>
+          <a href="javascript: void(0)" v-if="username">我的订单</a>
+          <a href="javascript: void(0)" class="my-cart" @click="gotoCart()"><i class="icon-cart"></i>购物车</a>
         </div>
       </div>
     </div>
@@ -79,7 +86,8 @@ export default {
   name: 'nav-header',
   data () {
     return {
-      productList: []
+      productList: [],
+      username: 'goozyshi'
     }
   },
   mounted () {
@@ -96,6 +104,9 @@ export default {
         let {list} = res
         this.productList = list
       })
+    },
+    gotoCart () {
+      this.$router.push('/cart')
     }
   }
 }
@@ -122,6 +133,41 @@ export default {
           color: #B0B0B0;
           margin-right: 17px; /* 官网使用宽17px的｜分隔 */
           text-decoration: none;
+        }
+        .app {
+          position: relative;
+          &:hover {
+            .app-qrcode {
+              height: 145px;
+              opacity: 1;
+            }
+          }
+          .app-qrcode {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            width: 124px;
+            height: 0;
+            margin-left: -55px;
+            background-color: #fff;
+            box-shadow: 0 1px 5px #aaa;
+            font-size: 14px;
+            color: #333;
+            overflow: hidden;
+            z-index: 10;
+            opacity: 0;
+            text-align: center;
+            transition: height .3s;
+            img {
+              width:90px;
+              height: 90px;
+              margin-top: 20px;
+            }
+            div {
+              height: 14px;
+              line-height: 1;
+            }
+          }
         }
         .my-cart {
           width: 120px;
