@@ -133,6 +133,9 @@ export default {
           color: #B0B0B0;
           margin-right: 17px; /* 官网使用宽17px的｜分隔 */
           text-decoration: none;
+          &:hover {
+            color: #fff;
+          }
         }
         .app {
           position: relative;
