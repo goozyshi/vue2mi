@@ -4,8 +4,13 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import 'element-ui/lib/theme-chalk/index.css'
 import { Message } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import VueLazyload from 'vue-lazyload'
+import loadingSVG from '@/assets/imgs/loading-svg/loading-bars.svg'
+Vue.use(VueLazyload, {
+  loading: loadingSVG
+})
 Vue.use(VueAxios, axios) // vue-axios 可以讲axios 实例挂载在 vue上，减少 axios 引入
 axios.post('http://rap2api.taobao.org/app/mock/306954/user/login', {})
 axios.defaults.baseURL = '/api'

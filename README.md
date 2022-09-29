@@ -30,4 +30,19 @@ cnpm install axios vue-lazyload element-ui vue-awesome-swiper vue-axios vue-cook
 
 ```
 
-## 封装 axios 以及环境隔离配置
+## 封装 axios
+
+## 轮播图实现
+
+安装vue-awesome-swiper
+```
+npm i vue-awesome-swiper@3 -S
+```
+
+引入
+```
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import "swiper/dist/css/swiper.css";
+...
+component: {swiper, swiperSlide}
+```

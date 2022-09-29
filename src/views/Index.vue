@@ -60,13 +60,13 @@
       <!-- 广告位 -->
       <div class="ads-box">
         <a v-for="(item, index) in adsList" :key="index" :href="'/product/' + item.id">
-          <img :src="item.img" alt="">
+          <img v-lazy="item.img" alt="">
         </a>
       </div>
       <!-- banner -->
       <div class="banner">
         <a href="/product/30">
-          <img :src="banner1" alt="">
+          <img v-lazy="banner1" alt="">
         </a>
       </div>
     </div>
@@ -257,6 +257,9 @@ export default {
         img {
           width: 100%;
           height: 100%;
+        }
+        &:first-child {
+          width: 264px;
         }
       }
     }
