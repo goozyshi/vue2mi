@@ -70,12 +70,50 @@
         </a>
       </div>
     </div>
+    <div class="product-box">
+      <div class="container">
+        <h2>手机</h2>
+        <div class="wrapper">
+          <div class="banner-left">
+            <a href="/product/35"><img v-lazy="phoneBanner" alt=""></a>
+          </div>
+          <div class="list-box">
+            <div class="list" v-for="(arr,i) in phoneList" :key="i">
+              <div class="item" v-for="(item,j) in arr" :key="j">
+                <div class="item-img">
+                  <img v-lazy="item.mainImage" alt="">
+                </div>
+                <div class="item-info">
+                  <p class="title">{{ item.name }}</p>
+                  <p class="desc">{{ item.subtitle }}</p>
+                  <p class="price" @click="addCartById(item.id)">{{ item.price }}元</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <service-bar></service-bar>
+    <modal
+      title="提示" 
+      sureText="查看购物车" 
+      btnType="1" 
+      modalType="middle" 
+      :showModal="showModal"
+      @submit="goToCart"
+      @cancel="showModal=false"
+      >
+      <template slot="body">
+        <p>商品添加成功！</p>
+      </template>
+    </modal>
   </div>
 </template>
 
 <script>
 import ServiceBar from '@/components/ServiceBar.vue';
+import Dialog from '@/components/Dialog.vue'
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import "swiper/dist/css/swiper.css";
 // 引入轮播图图片
@@ -95,18 +133,22 @@ import ad3 from '@/assets/imgs/ads/ads-3.png'
 import ad4 from '@/assets/imgs/ads/ads-4.jpg'
 // 引入banner 图
 import banner1 from '@/assets/imgs/banner-1.png'
+import phoneBanner from '@/assets/imgs/mix-alpha.jpg'
 
 export default {
   components: {
     ServiceBar,
+    modal: Dialog,
     swiper,
     swiperSlide
   },
   name: 'index-view',
   data () {
     return {
+      showModal: false,
       defaultProImg: item3, // 默认图片为红米 K20 Pro
       banner1,
+      phoneBanner,
       swiperOption: {
         loop: true,
         autoplay: {
@@ -159,6 +201,38 @@ export default {
         { id:45, img: ad3 },
         { id:47, img: ad4 }
       ],
+      phoneList:[]
+    }
+  },
+  mounted () {
+    this.initData()
+  },
+  methods: {
+    initData() {
+      this.axios.get('/products',{
+        params:{
+          categoryId:100012,
+          pageSize:14
+        }
+      }).then((res)=>{
+        res.list = res.list.slice(6,14);
+        this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)];
+      })
+    },
+    // 通过id添加购物车
+    addCartById (id) {
+      this.showModal = true
+      this.axios.post('/carts', {
+        productId: id,
+        selected: true
+      }).then(res => {
+        this.$store.dispatch('saveCartCount', res.cartTotalQuantity)
+      }).catch(()=>{
+      });
+    },
+    // 跳转购物车
+    goToCart () {
+      this.$router.push('/cart')
     }
   }
 }
@@ -268,6 +342,88 @@ export default {
       img {
         width: 100%;
         height: 100%;
+      }
+    }
+    .product-box{
+      background-color: #fafafa;
+      padding:30px 0 50px;
+      h2{
+        font-size: 16px;
+        height:21px;
+        line-height:21px;
+        color: #333;
+        margin-bottom:20px;
+      }
+      .wrapper{
+        display:flex;
+        .banner-left{
+          margin-right: 16px;
+          img{
+            width: 234px;
+            height: 614px;
+          }
+        }
+        .list-box{
+          .list{
+            @include flex();
+            width:986px;
+            margin-bottom:14px;
+            &:last-child{
+              margin-bottom:0;
+            }
+            .item{
+              width:234px;
+              height:300px;
+              background-color:#fff;
+              text-align:center;
+              padding: 20px 0;
+              box-sizing: border-box;
+              span{
+                display:inline-block;
+                width:67px;
+                height:24px;
+                font-size:14px;
+                line-height:24px;
+                color:#ffff;
+              }
+              .item-img{
+                img{
+                  width:100%;
+                  height:195px;
+                }
+              }
+              .item-info{
+                .title{
+                  font-size: 14px;
+                  color:#333;
+                  line-height: 14px;
+                  margin: 0 10px 10px;
+                  font-weight: 400;
+                }
+                .desc {
+                  margin: 0 10px 10px;
+                  height: 18px;
+                  font-size: 12px;
+                  color: #b0b0b0;
+                }
+                .price {
+                  margin: 0 10px 14px;
+                  text-align: center;
+                  color: #ff6700;
+                  font-size: 16px;
+                  font-weight: 400;
+                  cursor:pointer;
+                  &:after {
+                    @include bgImg(22px, 22px, '@/assets/imgs/icon-cart-hover.png');
+                    content: ' ';
+                    margin-left: 5px;
+                    vertical-align: middle;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
