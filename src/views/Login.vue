@@ -93,12 +93,12 @@ export default {
     .login-box {
       display: flex;
       flex-direction: column;
-      padding-bottom: 40px;
       .login-header {
         float: left;
         height: 80px;
         line-height: 80px;
         padding: 20px;
+        box-sizing: border-box;
         .login-logo {
           float: left;
           height: 40px;
@@ -136,17 +136,16 @@ export default {
       }
       .login-container {
         text-align: center;
-        min-height: 80vh;
         .login-form {
           display: inline-block;
           box-sizing: border-box;
           overflow: hidden;
           position: relative;
           width: 450px;
-          height:  600px;
+          height: 500px;
           border-radius: 4px;
           padding: 40px 45px;
-          margin: 0 auto 80px;
+          margin: 0 auto;
           box-shadow: 0 20px 50px 0 hsl(0deg 0% 64% / 10%);
           h3 {
             line-height:23px;
@@ -205,11 +204,10 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         box-sizing: border-box;
-        padding-bottom: 20px;
         color: #999;
         font-size: 12px;
         text-align: center;
-        padding: 0 20px;
+        padding: 20px;
       }
     }
   }
