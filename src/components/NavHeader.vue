@@ -124,9 +124,7 @@ export default {
       color: #B0B0B0;
       font-size: 12px;
       .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        @include flex();
         background-color: #333333;
         a {
           display: inline-block;
