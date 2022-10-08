@@ -7,3 +7,17 @@ a {
   display: inline-block;
   text-decoration: none;
 }
+
+.fl{
+  float: left;
+}
+.fr{
+  float: right;
+}
+.clearfix:before,.clearfix:after{
+  content:' ';
+  display:table;
+}
+.clearfix:after{
+  clear: both;
+}

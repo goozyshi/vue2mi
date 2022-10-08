@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+// 引入第三方
+import VueCookie from 'vue-cookie'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { Message } from 'element-ui'
@@ -11,8 +13,9 @@ import loadingSVG from '@/assets/imgs/loading-svg/loading-bars.svg'
 Vue.use(VueLazyload, {
   loading: loadingSVG
 })
+Vue.use(VueCookie)
 Vue.use(VueAxios, axios) // vue-axios 可以讲axios 实例挂载在 vue上，减少 axios 引入
-axios.post('http://rap2api.taobao.org/app/mock/306954/user/login', {})
+// axios 配置
 axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 8000 // 258原则
 axios.interceptors.response.use(

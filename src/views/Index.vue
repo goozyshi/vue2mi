@@ -48,8 +48,8 @@
           </ul>
         </div>
         <swiper :options="swiperOption">
-          <swiper-slide v-for="(item,index) in slideList" v-bind:key="index">
-            <a v-bind:href="'/product/'+ item.id"><img v-bind:src="item.img"></a>
+          <swiper-slide v-for="(item,index) in slideList" :key="index">
+            <a :href="'/product/'+ item.id"><img :src="item.img"></a>
           </swiper-slide>
           <!-- Optional controls -->
           <div class="swiper-pagination" slot="pagination"></div>
@@ -115,7 +115,6 @@
 import ServiceBar from '@/components/ServiceBar.vue';
 import Dialog from '@/components/Dialog.vue'
 import { swiper, swiperSlide } from "vue-awesome-swiper";
-import "swiper/dist/css/swiper.css";
 // 引入轮播图图片
 import slide1 from '@/assets/imgs/slider/slide-1.jpg'
 import slide2 from '@/assets/imgs/slider/slide-2.jpg'
@@ -134,6 +133,8 @@ import ad4 from '@/assets/imgs/ads/ads-4.jpg'
 // 引入banner 图
 import banner1 from '@/assets/imgs/banner-1.png'
 import phoneBanner from '@/assets/imgs/mix-alpha.jpg'
+
+import {shuffle} from '@/utils/utils'
 
 export default {
   components: {
@@ -214,8 +215,8 @@ export default {
           categoryId:100012,
           pageSize:14
         }
-      }).then((res)=>{
-        res.list = res.list.slice(6,14);
+      }).then(res => {
+        res.list = shuffle(res.list).slice(6,14);
         this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)];
       })
     },

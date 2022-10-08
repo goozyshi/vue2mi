@@ -23,10 +23,10 @@
           </a>
         </div>
         <div class="topbar-user">
-          <a href="javascript: void(0)" v-if="username">{{username}}</a>
-          <a href="javascript: void(0)" v-if="!username">登录</a>
-          <a href="javascript: void(0)" v-if="username">我的订单</a>
-          <a href="javascript: void(0)" class="my-cart" @click="gotoCart()"><i class="icon-cart"></i>购物车</a>
+          <a href="javascript: void(0)" v-if="userName">{{userName}}</a>
+          <a href="javascript: void(0)" v-if="!userName">登录</a>
+          <a href="javascript: void(0)" v-if="userName">我的订单</a>
+          <a href="javascript: void(0)" class="my-cart" @click="gotoCart()"><i class="icon-cart"></i>购物车({{cartCount}})</a>
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
             <div class="children">
               <ul>
                 <li class="product" v-for="(item) in productList" :key="item.id">
-                  <a href="/product" target="_blank">
+                  <a :href="`/product/${item.id}`" target="_blank">
                     <div class="pro-img">
                       <img :src="item.mainImage" :alt="item.subTitle"/>
                     </div>
@@ -82,13 +82,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import {shuffle} from '@/utils/utils'
 export default {
   name: 'nav-header',
   data () {
     return {
-      productList: [],
-      username: 'goozyshi'
+      productList: []
     }
+  },
+  computed: {
+    ...mapState(['userName', 'cartCount'])
   },
   mounted () {
     this.getProductList()
@@ -102,7 +106,7 @@ export default {
         }
       }).then(res => {
         let {list} = res
-        this.productList = list
+        this.productList = shuffle(list)
       })
     },
     gotoCart () {
@@ -174,7 +178,7 @@ export default {
           width: 120px;
           background-color: #424242;
           text-align: center;
-          color: #B0B0B0;
+          color: $primary-color;
           margin-right: 0;
           .icon-cart {
             @include bgImg(16px, 12px, '@/assets/imgs/icon-cart-checked.png');
@@ -290,6 +294,7 @@ export default {
             align-items: center;
             input {
               border: none;
+              outline: none;
               box-sizing: border-box;
               border-right: 1px solid #E0E0E0;
               width: 264px;

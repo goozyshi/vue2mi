@@ -48,14 +48,14 @@ export default {
   },
   methods: {
     login () {
-      let { username,password } = this;
+      let { username, password } = this
       this.axios.post('/user/login',{
         username,
         password
       }).then((res)=>{
-        this.$cookie.set('userId',res.id,{expires:'Session'});
-        // this.$store.dispatch('saveUserName',res.username);
-        this.saveUserName(res.username);
+        this.$cookie.set('userId', res.id, { expires: 'Session' })
+        this.$store.dispatch('saveUser', res)
+        this.saveUser(res)
         this.$router.push({
           name:'index',
           params:{
@@ -64,7 +64,7 @@ export default {
         });
       })
     },
-    ...mapActions(['saveUserName']),
+    ...mapActions(['saveUser']),
     register(){
       this.axios.post('/user/register',{
         username:'admin1',
