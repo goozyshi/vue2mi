@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import singleMessage from './utils/singleMessage'
 // 引入第三方
 import VueCookie from 'vue-cookie'
 import axios from 'axios'
@@ -15,6 +16,7 @@ Vue.use(VueLazyload, {
 })
 Vue.use(VueCookie)
 Vue.use(VueAxios, axios) // vue-axios 可以讲axios 实例挂载在 vue上，减少 axios 引入
+Vue.prototype.$message = singleMessage
 // axios 配置
 axios.defaults.baseURL = '/api'
 axios.defaults.timeout = 8000 // 258原则

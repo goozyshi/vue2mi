@@ -46,3 +46,8 @@ import "swiper/dist/css/swiper.css";
 ...
 component: {swiper, swiperSlide}
 ```
+
+## 购物车
+
+### 全选反选 + 调用接口实时计算
+### 商品上下限： 下限提示至少选一个， 上限不可超过库存

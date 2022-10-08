@@ -24,9 +24,10 @@
         </div>
         <div class="topbar-user">
           <a href="javascript: void(0)" v-if="userName">{{userName}}</a>
-          <a href="javascript: void(0)" v-if="!userName">登录</a>
+          <a href="javascript: void(0)" v-if="!userName" @click="login">登录</a>
+          <a href="javascript: void(0)" v-if="userName" @click="logout">退出</a>
           <a href="javascript: void(0)" v-if="userName">我的订单</a>
-          <a href="javascript: void(0)" class="my-cart" @click="gotoCart()"><i class="icon-cart"></i>购物车({{cartCount}})</a>
+          <a href="javascript: void(0)" class="my-cart" @click="gotoCart()"><i class="icon-cart"></i>购物车({{cartCount || 0}})</a>
         </div>
       </div>
     </div>
@@ -96,8 +97,24 @@ export default {
   },
   mounted () {
     this.getProductList()
+    const { params } = this.$route
+    if(params && params.from === 'login'){
+      this.getCartCount()
+    }
   },
   methods: {
+    login () {
+      this.$router.push('/login')
+    },
+    logout () {
+      this.axios.post('/user/logout').then(()=>{
+        // 清除cookie
+        this.$cookie.set('userId', '',{ expires: '-1' })
+        this.$store.dispatch('saveUser', {})
+        this.$store.dispatch('saveCartCount', 0)
+        this.$message.success('退出成功')
+      })
+    },
     getProductList () {
       this.axios.get('/products', {
         params: {
@@ -107,6 +124,11 @@ export default {
       }).then(res => {
         let {list} = res
         this.productList = shuffle(list)
+      })
+    },
+    getCartCount(){
+      this.axios.get('/carts/products/sum').then((res = 0) => {
+        this.$store.dispatch('saveCartCount',res);
       })
     },
     gotoCart () {
@@ -178,7 +200,9 @@ export default {
           width: 120px;
           background-color: #424242;
           text-align: center;
-          color: $primary-color;
+          &:hover {
+            color: $primary-color;
+          }
           margin-right: 0;
           .icon-cart {
             @include bgImg(16px, 12px, '@/assets/imgs/icon-cart-checked.png');
@@ -192,22 +216,6 @@ export default {
         position: relative;
         height: 100px;
         @include flex();
-        .header-logo {
-          display: inline-block;
-          height: 56px;
-          width: 56px;
-          line-height: 100px;
-          a {
-            display: inline-block;
-            height: 110px;
-            height: 56px;
-            &:before {
-              content: ' ';
-              @include bgImg(56px, 56px, '@/assets/imgs/logo-mi2.png');
-            }
-
-          }
-        }
         .header-menu {
           display: inline-block;
           width: 643px;

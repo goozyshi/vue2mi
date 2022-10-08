@@ -96,10 +96,10 @@
     </div>
     <service-bar></service-bar>
     <modal
-      title="提示" 
-      sureText="查看购物车" 
-      btnType="1" 
-      modalType="middle" 
+      title="提示"
+      sureText="查看购物车"
+      btnType="1"
+      modalType="middle"
       :showModal="showModal"
       @submit="goToCart"
       @cancel="showModal=false"
@@ -222,12 +222,15 @@ export default {
     },
     // 通过id添加购物车
     addCartById (id) {
-      this.showModal = true
       this.axios.post('/carts', {
         productId: id,
         selected: true
       }).then(res => {
-        this.$store.dispatch('saveCartCount', res.cartTotalQuantity)
+        console.log(res, 'res--ddd')
+        if (res) {
+          this.showModal = true
+          this.$store.dispatch('saveCartCount', res.cartTotalQuantity)
+        }
       }).catch(()=>{
       });
     },

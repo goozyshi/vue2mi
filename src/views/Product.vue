@@ -2,7 +2,7 @@
   <div class="product">
     <product-info :title="product.name">
       <template slot="buyArea">
-        <button class="btn">购买</button>
+        <button class="btn" @click="purchase">购买</button>
       </template>
     </product-info>
     <div class="content">
@@ -93,6 +93,9 @@ export default {
     this.getProductInfo()
   },
   methods: {
+    purchase () {
+      this.$message.success(`你打`)
+    },
     getProductInfo() {
       let id = this.$route.params.id
       this.axios.get(`/products/${id}`).then((res) => {
