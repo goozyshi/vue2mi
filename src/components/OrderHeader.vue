@@ -22,7 +22,7 @@
     },
     computed:{
       ...mapState(['userName'])
-    },
+    }
   }
 </script>
 <style lang="scss">
