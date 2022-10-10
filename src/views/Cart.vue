@@ -5,7 +5,7 @@
         <span>温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</span>
       </template>
     </order-header>
-    <div class="wrapper">
+    <div v-if="list.length" class="wrapper">
       <div class="container">
         <div class="cart-box">
           <ul class="cart-item-head">
@@ -50,13 +50,21 @@
         </div>
       </div>
     </div>
+    <no-data v-if="!list.length">
+      <template slot="default">
+        <buttun v-if="userName" class="btn" @click="$router.push('/index')">去添加</buttun>
+      </template>
+    </no-data>
     <service-bar></service-bar>
-    <nav-footer></nav-footer>
+    <nav-footer>
+    </nav-footer>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import OrderHeader from '@/components/OrderHeader.vue'
+import NoData from '@/components/NoData.vue'
 import ServiceBar from '@/components/ServiceBar.vue'
 import NavFooter from '@/components/NavFooter.vue'
 export default {
@@ -64,7 +72,8 @@ export default {
   components: {
     OrderHeader,
     ServiceBar,
-    NavFooter
+    NavFooter,
+    NoData
   },
   data () {
     return {
@@ -74,70 +83,73 @@ export default {
       checkedNum: 0 // 选中商品数量
     }
   },
-    mounted() {
-      this.getCartList()
+  computed:{
+    ...mapState(['userName'])
+  },
+  mounted() {
+    this.getCartList()
+  },
+  methods: {
+    // 获取购物车列表
+    getCartList() {
+      this.axios.get('/carts').then((res)=>{
+        this.renderData(res)
+      })
     },
-    methods: {
-      // 获取购物车列表
-      getCartList() {
-        this.axios.get('/carts').then((res)=>{
-          this.renderData(res)
-        })
-      },
-      // 更新购物车数量和购物车单选状态
-      updateCart(item, type) {
-        let { quantity, productSelected: selected } = item
-        if (type == '-') {
-          if (quantity == 1) {
-            this.$message.warning('商品至少保留一件')
-            return
-          }
-          --quantity;
-        } else if (type == '+') {
-          if(quantity > item.productStock) {
-            return this.$message.warning('购买数量不能超过库存数量')
-          }
-          ++quantity
-        } else {
-          selected = !item.productSelected
+    // 更新购物车数量和购物车单选状态
+    updateCart(item, type) {
+      let { quantity, productSelected: selected } = item
+      if (type == '-') {
+        if (quantity == 1) {
+          this.$message.warning('商品至少保留一件')
+          return
         }
-        this.axios.put(`/carts/${item.productId}`, {
-          quantity,
-          selected
-        }).then((res)=> {
-          this.renderData(res)
-        })
-      },
-      // 删除购物车商品
-      delProduct(item) {
-        this.axios.delete(`/carts/${item.productId}`).then((res) => {
-          this.$message.success('删除成功')
-          this.renderData(res)
-        });
-      },
-      // 控制全选功能
-      toggleAll(){
-        let url = this.allChecked?'/carts/unSelectAll':'/carts/selectAll';
-        this.axios.put(url).then((res)=>{
-          this.renderData(res);
-        })
-      },
-      renderData(res) {
-        this.list = res.cartProductVoList || []
-        this.allChecked = res.selectedAll
-        this.cartTotalPrice = res.cartTotalPrice
-        this.checkedNum = this.list.filter(item=>item.productSelected).length
-      },
-      // 购物车下单
-      order(){
-        let isCheck = this.list.every(item=>!item.productSelected)
-        if (isCheck) {
-          this.$message.warning('请选择一件商品')
-        } else {
-          this.$router.push('/order/confirm')
+        --quantity;
+      } else if (type == '+') {
+        if(quantity > item.productStock) {
+          return this.$message.warning('购买数量不能超过库存数量')
         }
+        ++quantity
+      } else {
+        selected = !item.productSelected
+      }
+      this.axios.put(`/carts/${item.productId}`, {
+        quantity,
+        selected
+      }).then((res)=> {
+        this.renderData(res)
+      })
+    },
+    // 删除购物车商品
+    delProduct(item) {
+      this.axios.delete(`/carts/${item.productId}`).then((res) => {
+        this.$message.success('删除成功')
+        this.renderData(res)
+      });
+    },
+    // 控制全选功能
+    toggleAll(){
+      let url = this.allChecked?'/carts/unSelectAll':'/carts/selectAll';
+      this.axios.put(url).then((res)=>{
+        this.renderData(res);
+      })
+    },
+    renderData(res) {
+      this.list = res.cartProductVoList || []
+      this.allChecked = res.selectedAll
+      this.cartTotalPrice = res.cartTotalPrice
+      this.checkedNum = this.list.filter(item=>item.productSelected).length
+    },
+    // 购物车下单
+    order(){
+      let isCheck = this.list.every(item=>!item.productSelected)
+      if (isCheck) {
+        this.$message.warning('请选择一件商品')
+      } else {
+        this.$router.push('/order/confirm')
       }
     }
+  }
 }
 </script>
 
