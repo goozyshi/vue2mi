@@ -94,7 +94,8 @@ export default {
   },
   methods: {
     purchase () {
-      this.$message.success(`你打`)
+      let id = this.$route.params.id
+      this.$router.push(`/detail/${id}`)
     },
     getProductInfo() {
       let id = this.$route.params.id

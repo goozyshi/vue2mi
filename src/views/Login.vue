@@ -16,10 +16,10 @@
             <span class="checked">帐号登录</span><span class="sep-line">|</span><span>扫码登录</span>
           </h3>
           <div class="input">
-            <input type="text" placeholder="请输入帐号" v-model="username">
+            <input type="text" placeholder="默认账号goozyshi" v-model="username">
           </div>
           <div class="input">
-            <input type="password" placeholder="请输入密码" v-model="password">
+            <input type="password" placeholder="默认密码goozyshi" v-model="password">
           </div>
           <div class="btn-box">
             <a href="javascript:;" class="btn" @click="login">登录</a>
@@ -66,11 +66,11 @@ export default {
     },
     ...mapActions(['saveUser']),
     register(){
-      this.axios.post('/user/register',{
+      this.axios.post('/user/register', {
         username:'goozyshi',
         password:'goozyshi',
         email:'goozyshi@gmail.com'
-      }).then(()=>{
+      }).then(() => {
         this.$message.success('注册成功');
       })
     }

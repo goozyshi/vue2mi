@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar" :class="{'is_fixed': isSticky }">
     <div class="container">
-      <div class="pro-title">{{ title || '虾米' }} </div>
+      <div class="pro-title">{{ title }} </div>
       <div class="pro-param">
         <a href="javascript: void(0);">概述</a><span>|</span>
         <a href="javascript: void(0);">参数</a><span>|</span>

@@ -109,6 +109,7 @@ export default{
         productId:this.id,
         selected: true
       }).then((res={cartProductVoList:0})=>{
+        this.$message.success(`添加成功`)
         this.$store.dispatch('saveCartCount',res.cartTotalQuantity);
       });
     }
