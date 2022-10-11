@@ -6,7 +6,29 @@ vue2仿小米商城，实现包括登录、购物车功能、支付功能
 
 没有布置服务器，截了几张图
 
+### 登录页
 
+![](https://github.com/goozyshi/vue2mi/blob/master/preview/login.png?raw=true)
+
+### 首页
+
+![](https://github.com/goozyshi/vue2mi/blob/master/preview/index.png?raw=true)
+
+### 购物车
+
+![](https://github.com/goozyshi/vue2mi/blob/master/preview/cartwithgoods.png?raw=true)
+
+### 订单
+
+![](https://github.com/goozyshi/vue2mi/blob/master/preview/order.png?raw=true)
+
+### 支付宝支付
+
+![](https://github.com/goozyshi/vue2mi/blob/master/preview/aliPay.png?raw=true)
+
+### 微信支付
+
+![](https://github.com/goozyshi/vue2mi/blob/master/preview/wechatPay.png?raw=true)
 
 ## 项目启动
 
