@@ -65,7 +65,7 @@
       </div>
       <!-- banner -->
       <div class="banner">
-        <a href="/#/product/30">
+        <a href="/product/30">
           <img v-lazy="banner1" alt="">
         </a>
       </div>
@@ -75,7 +75,7 @@
         <h2>手机</h2>
         <div class="wrapper">
           <div class="banner-left">
-            <a href="/#/product/35"><img v-lazy="phoneBanner" alt=""></a>
+            <a href="/product/35"><img v-lazy="phoneBanner" alt=""></a>
           </div>
           <div class="list-box">
             <div class="list" v-for="(arr,i) in phoneList" :key="i">
@@ -226,6 +226,7 @@ export default {
         productId: id,
         selected: true
       }).then(res => {
+        console.log(res, 'res--ddd')
         if (res) {
           this.showModal = true
           this.$store.dispatch('saveCartCount', res.cartTotalQuantity)
