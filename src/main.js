@@ -18,7 +18,7 @@ Vue.use(VueCookie)
 Vue.use(VueAxios, axios) // vue-axios 可以讲axios 实例挂载在 vue上，减少 axios 引入
 Vue.prototype.$message = singleMessage
 // axios 配置
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? 'http://mall-pre.springboot.cn' : '/api'
 axios.defaults.timeout = 8000 // 258原则
 axios.interceptors.response.use(
   response => {

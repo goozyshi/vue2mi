@@ -16,7 +16,8 @@ module.exports = defineConfig({
     }
   },
   // 线上打包
-  productionSourceMap: false,
+  publicPath: process.env.NODE_ENV === 'production' ? '/vue2mi' : '/',
+  productionSourceMap: true,
   chainWebpack: config => {
     config.plugins.delete('prefetch')
   }

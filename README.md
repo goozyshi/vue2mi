@@ -2,6 +2,12 @@
 
 vue2仿小米商城，实现包括登录、购物车功能、支付功能
 
+## 项目预览
+
+没有布置服务器，截了几张图
+
+
+
 ## 项目启动
 
 ```bash
@@ -66,3 +72,44 @@ component: {swiper, swiperSlide}
 ### 支付类型
 - 微信支付： 返回支付链接，生成二维码后扫码支付
 - 支付宝支付：返回html源码，使用v-html进行渲染，生成支付页面
+
+## 部署
+### 本地部署
+
+安装 server
+```bash
+npm i -g server
+
+server -s dist
+```
+
+### 线上
+自动化:
+deploy.sh
+```sh
+#!/usr/bin/env sh
+
+# abort on errors
+set -e
+
+# build
+npm run build
+
+# navigate into the build output directory
+cd dist
+
+# if you are deploying to a custom domain
+# echo 'www.example.com' > CNAME
+
+git init
+git add -A
+git commit -m 'deploy'
+
+# if you are deploying to https://goozyshi.github.io
+# git push -f git@github.com:goozyshi/goozyshi.github.io.git main
+
+# if you are deploying to https://goozyshi.github.io/vue2mi
+git push -f git@github.com:goozyshi/vue2mi.git main:gh-pages
+
+cd -
+```

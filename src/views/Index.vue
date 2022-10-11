@@ -10,7 +10,7 @@
               <div class="children">
                 <ul v-for="item in itemList" :key="item.id">
                   <li v-for="(sub, index) in item" :key="index">
-                    <a :href="sub ? '/product/'+ sub.id :'' ">
+                    <a @clcik="goProduct(sub)">
                       <img :src="sub ? sub.img : defaultProImg " alt="">
                       {{sub?.name || '默认手机' }}
                     </a>
@@ -65,7 +65,7 @@
       </div>
       <!-- banner -->
       <div class="banner">
-        <a href="/product/30">
+        <a @click="$router.push('/product/30')">
           <img v-lazy="banner1" alt="">
         </a>
       </div>
@@ -75,7 +75,7 @@
         <h2>手机</h2>
         <div class="wrapper">
           <div class="banner-left">
-            <a href="/product/35"><img v-lazy="phoneBanner" alt=""></a>
+            <a @click="$router.push('/product/35')"><img v-lazy="phoneBanner" alt=""></a>
           </div>
           <div class="list-box">
             <div class="list" v-for="(arr,i) in phoneList" :key="i">
@@ -219,6 +219,11 @@ export default {
         res.list = shuffle(res.list).slice(6,14);
         this.phoneList = [res.list.slice(0,4),res.list.slice(4,8)];
       })
+    },
+    goProduct (sub) {
+      if (sub && sub.id) {
+        this.$router.push(`/products/${sub.id}`)
+      }
     },
     // 通过id添加购物车
     addCartById (id) {
