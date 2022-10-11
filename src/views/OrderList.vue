@@ -110,7 +110,7 @@
       },
       goPay(orderNo){
         this.$router.push({
-          path:'/order/pay',
+          path:'/#/order/pay',
           query:{
             orderNo
           }

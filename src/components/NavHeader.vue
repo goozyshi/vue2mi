@@ -26,7 +26,7 @@
           <a href="javascript: void(0)" v-if="userName">{{userName}}</a>
           <a href="javascript: void(0)" v-if="!userName" @click="login">登录</a>
           <a href="javascript: void(0)" v-if="userName" @click="logout">退出</a>
-          <a href="/order/list" v-if="userName">我的订单</a>
+          <a href="/#/order/list" v-if="userName">我的订单</a>
           <a href="javascript: void(0)" class="my-cart" @click="gotoCart()"><i class="icon-cart"></i>购物车({{cartCount || 0}})</a>
         </div>
       </div>
@@ -35,7 +35,7 @@
     <div class="nav-header">
       <div class="container">
         <div class="header-logo">
-          <a href="/index"></a>
+          <a href="/#/index"></a>
         </div>
         <div class="header-menu">
           <div class="item-menu">
@@ -43,7 +43,7 @@
             <div class="children">
               <ul>
                 <li class="product" v-for="(item) in productList" :key="item.id">
-                  <a :href="`/product/${item.id}`" target="_blank">
+                  <a :href="`/#/product/${item.id}`" target="_blank">
                     <div class="pro-img">
                       <img :src="item.mainImage" :alt="item.subTitle"/>
                     </div>
